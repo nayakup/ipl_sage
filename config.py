@@ -99,8 +99,8 @@ def get_logger(name: str) -> logging.Logger:
         datefmt="%Y-%m-%d %H:%M:%S",
         handlers=[RichHandler(console=console)],
     )
-    logger_object = logging.getLogger(name)
-    return logger_object
+    logger = logging.getLogger(name)
+    return logger
 
 
 DATABASE_NAME = "ipldatabase.db"
