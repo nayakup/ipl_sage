@@ -105,4 +105,4 @@ def get_logger(name: str) -> logging.Logger:
 
 DATABASE_NAME = "ipldatabase.db"
 DATABASE_TABLE = "ipl"
-LLM_TEMPERATURE = 0  # Lower temperature for more deterministic results
+LLM_TEMPERATURE = 0
