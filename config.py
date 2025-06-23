@@ -99,10 +99,10 @@ def get_logger(name: str) -> logging.Logger:
         datefmt="%Y-%m-%d %H:%M:%S",
         handlers=[RichHandler(console=console)],
     )
-    logger = logging.getLogger(name)
-    return logger
+    logger_object = logging.getLogger(name)
+    return logger_object
 
 
 DATABASE_NAME = "ipldatabase.db"
 DATABASE_TABLE = "ipl"
-LLM_TEMPERATURE = 0  # Lower temperature for more deterministic output
+LLM_TEMPERATURE = 0  # Lower temperature for more deterministic results
