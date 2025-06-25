@@ -103,4 +103,5 @@ lint.ignore = [
     "INP001", # Checks for packages that are missing an __init__.py file.
     "UP006", # Checks for the use of generics that can be replaced with standard library variants based on PEP 585.
     "UP045", # Check for typing.Optional annotations that can be rewritten based on PEP 604 syntax.
+    "D200", # Checks for docstrings that do not have a summary line.
 ]   

@@ -9,7 +9,6 @@ from atomic_agents.lib.components.system_prompt_generator import SystemPromptGen
 from pydantic import Field
 
 from config import LLM_TEMPERATURE, ChatConfig, get_logger
-from services.context_provider import IPLContextProvider
 
 logger = get_logger(__name__)
 
@@ -25,13 +24,12 @@ class IPLAgentInputSchema(BaseIOSchema):
 class IPLAgentOutputSchema(BaseIOSchema):
     """Schema for output from the RAG query agent."""
 
-    # reasoning: str = Field(..., description="reasoning for the generated duckdb query, if requested by the user")
+    reasoning: str = Field(..., description="The Reasoning for the generated duckdb query")
     duckdb_query: str = Field(
         ..., description="The duckdb that retrieves the results corresponding to the user's inquiry"
     )
 
 
-logger.info("Creating Query Agent")
 ipl_query_agent = BaseAgent(
     BaseAgentConfig(
         client=instructor.from_openai(openai.OpenAI(api_key=ChatConfig.api_key)),
@@ -54,10 +52,9 @@ ipl_query_agent = BaseAgent(
                 "Use proper duckdb query syntax and functions",
                 "Handle edge cases and potential errors",
                 "Do not include any comments or additional text in the query",
-                "Return executable duckdb query",
+                "Return executable and formatted duckdb query",
                 "Provide reasoning for the query if asked",
             ],
-            context_providers={"CSV Schema Context": IPLContextProvider(title="CSV Schema Context")},
         ),
         input_schema=IPLAgentInputSchema,
         output_schema=IPLAgentOutputSchema,

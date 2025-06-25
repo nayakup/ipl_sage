@@ -3,7 +3,7 @@ from pathlib import Path
 
 import duckdb
 
-from config import DATABASE_NAME, DATABASE_TABLE, MatchData, get_logger
+from config import DATABASE_NAME, DATABASE_TABLE, get_logger
 
 logger = get_logger(__name__)
 
@@ -17,7 +17,9 @@ class PreprocessIPLData:
     def is_safe_table_name(self, name: str) -> bool:
         return re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", name) is not None
 
-    def process_duckdb_table(self, file_dir: str = Path(__file__).parent, *, recreate_table: bool = False):
+    def process_duckdb_table(
+        self, file_dir: str = Path(__file__).parent, *, recreate_table: bool = False
+    ) -> duckdb.DuckDBPyConnection:
         """
         Process CSV files with DuckDB and create or refresh the table.
 
@@ -60,35 +62,6 @@ class PreprocessIPLData:
 
         self.connection = con
         return con
-
-    def generate_schema_description_duckdb(self) -> str:
-        """
-
-        Generate a human-readable schema description of the DuckDB table.
-
-        Returns:
-            str: Schema description with table info and sample data.
-
-        """
-        schema = MatchData.model_json_schema()
-        description_lines = [
-            f"The DuckDB table '{DATABASE_TABLE}' contains IPL match data with the following columns:\n"
-        ]
-
-        for field_name, field_info in schema.get("properties", {}).items():
-            field_type = field_info.get("type", "unknown")
-            desc = field_info.get("description", "No description available")
-            description_lines.append(f"- {field_name} ({field_type}): {desc}")
-
-        row_count = self.connection.execute(f"SELECT COUNT(*) FROM {DATABASE_TABLE}").fetchone()[0]  # noqa: S608
-        col_count = len(self.connection.execute(f"PRAGMA table_info('{DATABASE_TABLE}')").fetchall())
-        description_lines.append(f"\nTable shape: ({row_count} rows, {col_count} columns)")
-
-        sample_df = self.connection.execute(f"SELECT * FROM {DATABASE_TABLE} LIMIT 3").fetchdf()  # noqa: S608
-        description_lines.append(f"\nSample data:\n{sample_df.to_string(index=False)}")
-
-        logger.info("Generated schema description")
-        return "\n".join(description_lines)
 
 
 if __name__ == "__main__":

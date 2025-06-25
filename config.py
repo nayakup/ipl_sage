@@ -29,7 +29,7 @@ class ChatConfig:
     """Configuration for the chat application"""
 
     api_key: str = get_api_key()  # This becomes a class variable
-    model: str = "gpt-4.1-nano"
+    model: str = "gpt-4o-mini"
     exit_commands: set[str] = frozenset({"/exit", "exit", "quit", "/quit"})
 
     def __init__(self):
@@ -94,7 +94,7 @@ def get_logger(name: str) -> logging.Logger:
 
     # Configure logging with RichHandler
     logging.basicConfig(
-        level=logging.INFO,
+        level=logging.WARNING,
         format="%(asctime)s [%(levelname)s] %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
         handlers=[RichHandler(console=console)],
@@ -105,4 +105,4 @@ def get_logger(name: str) -> logging.Logger:
 
 DATABASE_NAME = "ipldatabase.db"
 DATABASE_TABLE = "ipl"
-LLM_TEMPERATURE = 0  # Lower temperature for more deterministic output
+LLM_TEMPERATURE = 0.7  # Lower temperature for more deterministic output
