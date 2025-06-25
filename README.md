@@ -7,9 +7,7 @@ The IPL RAG Chatbot is a Retrieval-Augmented Generation (RAG) chatbot designed t
 - [Overview](#overview)
 - [Architecture](#architecture)
 - [Features](#features)
-- [Setup and Installation](#setup-and-installation)
 - [Usage](#usage)
-- [File Structure](#file-structure)
 - [License](#license)
 
 ## Overview
@@ -37,9 +35,43 @@ Key components of the system include:
 - **Logging & Error Handling:** Uses RichHandler for enhanced logging and error alerts.
 - **Modular Structure:** Separates configuration, preprocessing, querying, and context providing into dedicated scripts.
 
-## Setup and Installation
+## Usage
 
-1. **Clone the Repository:**
-```bash
-   git clone <repository-url>
-   cd <project-directory>
+# How to Use IPL Sage (The IPL Data Analysis Assistant)
+
+Welcome to **IPL Sage**! This assistant helps you analyze IPL cricket data and generates DuckDB queries for your questions. Here’s how to get started:
+
+## 🏏 What Can You Ask?
+
+You can ask any question related to IPL statistics, such as:
+- "Who has taken the most wickets in the 2025 season?"
+- "Which team has the best bowling economy rate for the 2025 season?"
+- "Which player has the highest number of sixes in the tournament?"
+
+## 🚀 How to Interact
+
+1. **Start the Bot:**  
+   Run the assistant from your terminal using:
+
+   uv run -m main
+
+(Make sure you are in the project root directory.)
+
+2. **Ask Your Question:**  
+Type your IPL-related question at the prompt and press Enter.
+
+3. **View the Output:**  
+The bot will display:
+- The reasoning behind the generated DuckDB query.
+- The actual DuckDB query you can use.
+- (If applicable) The results of the query in a table.
+
+## 💡 Tips
+
+- Be as specific as possible in your questions for best results.
+- If you want to understand how a query was generated, ask for the reasoning.
+- You can use the example questions shown at startup to get started.
+
+---
+
+Enjoy exploring IPL data with IPL Sage!
